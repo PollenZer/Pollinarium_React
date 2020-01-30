@@ -21,7 +21,7 @@ export default function TemporaryDrawer() {
     left: false,
   });
 
-  const toggleDrawer = (open) => event => {
+  const toggleDrawer = open => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
@@ -29,13 +29,16 @@ export default function TemporaryDrawer() {
     setState({ ...state, 'left': open });
   };
 
-  const nav = item => {
-    // history.push("/"+item)
-    console.log(item)
-  }
+  
+
+  // const oklm = () => {
+  //   // history.push("/"+item)
+  //   console.log(this.props)
+  // }
 
   return (
     <div>
+      {/* <Button onClick={()=>{navigate("/")}}></Button> */}
       <Button onClick={toggleDrawer(true)}>Open Left</Button>
       <Drawer open={state.left} onClose={toggleDrawer(false)}>
       <div
@@ -45,16 +48,16 @@ export default function TemporaryDrawer() {
       >
         <List>
           <ListItem button >
-            <ListItemText primary='Home' onClick={nav("/home")} />
+            <ListItemText primary='Home' onClick={()=>{this.props.history.push("/home")}} />
           </ListItem>
           <ListItem button >
-            <ListItemText primary='Users' onClick={nav("/users")} />
+            <ListItemText primary='Users' onClick={()=>{console.log("/users")}} />
           </ListItem>
           <ListItem button >
-            <ListItemText primary='Datas' onClick={nav("/datas")} />
+            <ListItemText primary='Datas' onClick={()=>{console.log("/datas")}} />
           </ListItem>
           <ListItem button >
-            <ListItemText primary='Contact' onClick={nav("/contact")} />
+            <ListItemText primary='Contact' onClick={()=>{console.log("/contact")}} />
           </ListItem>
         </List>
       </div>
