@@ -9,13 +9,11 @@ import FourOFour from './Navigation/FourOFour/Page.js'
 import Drawer from '@material-ui/core/Drawer'; //https://material-ui.com/components/drawers/
 import List from '@material-ui/core/List';
 import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
+import Snackbar from '@material-ui/core/Snackbar';
 import AppBar from '@material-ui/core/AppBar';
 import Switcher from '@material-ui/core/Switch';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -23,9 +21,12 @@ import Typography from '@material-ui/core/Typography';
 import { ChromePicker } from 'react-color';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import ArrowBack from '@material-ui/icons/ArrowBackIos';
 import MenuIcon from '@material-ui/icons/Menu';
+import MuiAlert from '@material-ui/lab/Alert';
 import SettingsIcon from '@material-ui/icons/ColorLens';
-import yellow from '@material-ui/core/colors/yellow';
+import materialPColor from '@material-ui/core/colors/purple';
+import materialSColor from '@material-ui/core/colors/yellow';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import './Fonts/font.css'
 
@@ -34,12 +35,12 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       // Purple and green play nicely together.
-      main: localStorage.getItem("pColor") || yellow[500],
+      main: localStorage.getItem("pColor") || materialPColor[500],
       // main: yellow[500],
     },
     secondary: {
       // This is green.A700 as hex.
-      main: localStorage.getItem("sColor") || '#11cb5f',
+      main: localStorage.getItem("sColor") || materialSColor[600],
     },
   },
 });
@@ -50,7 +51,6 @@ const style={
     width:"100%",
     height:"7vh",
     textDecoration:"none",
-    // fontFamily:"Roboto",
     color:"black",
     verticalAlign:'middle',
     lineHeight:"7vh",
@@ -66,6 +66,13 @@ const style={
   titreDeLaPage:{
     margin:'auto auto',
   },
+  centerItem:{
+    margin:'0 auto',
+  },
+  whichColor:{
+    margin:'0 auto',
+    fontFamily:"RobotoR"
+  }
 }
 
 const toggleColorList=["Select your primary color","Select your secondary color"]
@@ -81,12 +88,33 @@ class App extends Component {
       pColor: localStorage.getItem("pColor") || '#fff',
       sColor: localStorage.getItem("sColor") || '#fff', 
       openDialog:false,
-      toggleColor:toggleColorList[0]
+      whichColor:0,
+      openSnack:false,
     }
   }
 
   saveColors = () => {
-    this.handleCloseDialog()
+    console.log(this.state.background)
+    if(this.state.background===undefined||this.state.background==="undefined"||this.state.background===null){
+      alert("Aucune couleur n'a ete selectionnee => couleurs remises pas defaut")
+      localStorage.setItem("pColor","")
+      localStorage.setItem("sColor","")
+    }else{
+      // switchColor = true : secondary / switchColor = false : primary
+      var switchColor = document.getElementById("switchColor").checked
+      // secondary
+      if(switchColor){
+        localStorage.setItem("sColor",this.state.background)
+        // primary
+      }else{
+        localStorage.setItem("pColor",this.state.background)
+      }
+      this.setState({openSnack:true})
+      setTimeout(()=>{
+        this.setState({openSnack:false})
+      },5000)
+      this.handleCloseDialog()
+    }
   }
   
   handleChangeComplete = color => {
@@ -94,10 +122,10 @@ class App extends Component {
   }  
   // savoir si on veux changer la couleur principale ou secondaire
   handleChangeColorPicking = () => {
-    var number = 0 
-    number++;
-    number = number%2;
-    this.setState({toggleColor:toggleColorList[number]})
+    var number = this.state.whichColor
+    number++
+    number%=2
+    this.setState({whichColor:number})
   }
   handleOpenDialog = () => {
     this.setState({openDialog:true})
@@ -129,7 +157,8 @@ class App extends Component {
               <IconButton
                 onClick={this.toggleDrawer(false)}
                 edge="start" 
-                color="inherit" 
+                color="secondary"
+                variant="outlined"
                 style={style.closeDrawerButton}
                 aria-label="menu"
                 >
@@ -212,7 +241,7 @@ class App extends Component {
                   color="inherit" 
                   aria-label="menu"
                   >
-                  <CloseIcon/>
+                  <ArrowBack/>
                 </IconButton> 
                 <Typography 
                   variant="h6" 
@@ -224,18 +253,28 @@ class App extends Component {
               </Toolbar>
             </AppBar>
             {/* select between primary and secondary */}
+            <center>
             <Switcher
+              id="switchColor"
               onChange={this.handleChangeColorPicking}
-              value="color"
+              style={style.centerItem} 
               inputProps={{ 'aria-label': 'secondary checkbox' }}
             />
-            {this.state.toggleColor}
+            </center>
+              <Typography 
+                  style={style.whichColor} 
+                  >
+                  {toggleColorList[this.state.whichColor]}
+                </Typography>
+                <center>
             <ChromePicker 
-              color={ this.state.background }
+              color={this.state.background}
               onChangeComplete={ this.handleChangeComplete }
             />
+            </center>
           <DialogActions>
             <Button 
+              style={style.centerItem} 
               onClick={this.saveColors} 
               color="secondary" 
               autoFocus
@@ -245,6 +284,11 @@ class App extends Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <Snackbar open={this.state.openSnack} onClick={()=>{this.setState({openSnack:false})}} autoHideDuration={3000}>
+          <MuiAlert elevation={6} variant="filled" severity="success">
+            Press f5 to see your new color setup 🤔
+          </MuiAlert>
+        </Snackbar>
       </ThemeProvider>
     );
   }
