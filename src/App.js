@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom'
 import Contact from './Navigation/Contact/Page.js'
 import Datas from './Navigation/Datas/Page.js'
@@ -79,22 +78,36 @@ const toggleColorList=["Select your primary color","Select your secondary color"
 
 class App extends Component {
   constructor(props){
+    console.log('website loading')
     super(props)
     // left = bool douverture de la navbar
     // chooseColor = bool du toggleButton
     // openDialog = bool de louverture du dialog
     this.state={
       left:false,
+      // https://www.youth4work.com/Talent/html5/Forum/113066-difference-between-local-storage-and-session-storage-in-html5
+      // sessionStorage : expire on browser closing
+      // localStorage : no expiration
       pColor: localStorage.getItem("pColor") || '#fff',
       sColor: localStorage.getItem("sColor") || '#fff', 
       openDialog:false,
       whichColor:0,
+      background:"#fff",
       openSnack:false,
     }
   }
 
+  // min inclus / max exclus
+  randomNum = (min, max) => {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  componentDidMount = () => {
+    var defaultColor = "rgba("+this.randomNum(0,256)+","+this.randomNum(0,256)+","+this.randomNum(0,256)+","+this.randomNum(0,11)/10+")"
+    this.setState({background:defaultColor})
+  }
+
   saveColors = () => {
-    console.log(this.state.background)
     if(this.state.background===undefined||this.state.background==="undefined"||this.state.background===null){
       alert("Aucune couleur n'a ete selectionnee => couleurs remises pas defaut")
       localStorage.setItem("pColor","")
@@ -158,7 +171,6 @@ class App extends Component {
                 onClick={this.toggleDrawer(false)}
                 edge="start" 
                 color="secondary"
-                variant="outlined"
                 style={style.closeDrawerButton}
                 aria-label="menu"
                 >
@@ -232,7 +244,10 @@ class App extends Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <AppBar position="static" color="primary">
+          <AppBar 
+            position="static" 
+            color="primary"
+            >
               <Toolbar>
                 {/* button color maker */}
                 <IconButton
