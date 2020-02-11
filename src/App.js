@@ -35,16 +35,14 @@ const theme = createMuiTheme({
     primary: {
       // Purple and green play nicely together.
       main: localStorage.getItem("pColor") || materialPColor[500],
-      // main: yellow[500],
     },
     secondary: {
-      // This is green.A700 as hex.
       main: localStorage.getItem("sColor") || materialSColor[600],
     },
   },
 });
 
-// variable CSS
+// constante CSS
 const style={
   itemMenuList:{
     width:"100%",
@@ -59,14 +57,18 @@ const style={
   backgroundLinear:{
     background: "linear-gradient(to left, red, blue)",
   },
+  inline:{
+    display:"inline",
+    fontFamily:"RobotoR",
+  },
+  center:{
+    textAlign:"-webkit-center",
+  },
   closeDrawerButton:{
-    margin:'9px'
+    margin:'9px',
   },
   titreDeLaPage:{
     margin:'auto auto',
-  },
-  centerItem:{
-    margin:'0 auto',
   },
   whichColor:{
     margin:'0 auto',
@@ -97,6 +99,12 @@ class App extends Component {
     }
   }
 
+
+  // le minimum si je veux cacher les warning hehe
+  // componentDidUpdate = () => {
+    // console.clear()
+  // }
+
   // min inclus / max exclus
   randomNum = (min, max) => {
     return Math.floor(Math.random() * (max - min) + min);
@@ -126,7 +134,6 @@ class App extends Component {
       setTimeout(()=>{
         this.setState({openSnack:false})
       },5000)
-      this.handleCloseDialog()
     }
   }
   
@@ -268,28 +275,34 @@ class App extends Component {
               </Toolbar>
             </AppBar>
             {/* select between primary and secondary */}
-            <center>
-            <Switcher
-              id="switchColor"
-              onChange={this.handleChangeColorPicking}
-              style={style.centerItem} 
-              inputProps={{ 'aria-label': 'secondary checkbox' }}
-            />
-            </center>
+            <div style={style.center}>
+              <div style={style.inline}>
+                Primary
+              </div>
+              <Switcher
+                id="switchColor"
+                onChange={this.handleChangeColorPicking}
+                style={style.inline} 
+                inputProps={{ 'aria-label': 'secondary checkbox' }}
+              />
+              <div style={style.inline}>
+                Secondary
+              </div>
+            </div>
               <Typography 
-                  style={style.whichColor} 
-                  >
-                  {toggleColorList[this.state.whichColor]}
-                </Typography>
-                <center>
-            <ChromePicker 
-              color={this.state.background}
-              onChangeComplete={ this.handleChangeComplete }
-            />
+                style={style.whichColor} 
+                >
+                {toggleColorList[this.state.whichColor]}
+              </Typography>
+            <center>
+              <ChromePicker 
+                color={this.state.background}
+                onChangeComplete={ this.handleChangeComplete }
+              />
             </center>
           <DialogActions>
             <Button 
-              style={style.centerItem} 
+              style={style.whichColor}
               onClick={this.saveColors} 
               color="secondary" 
               autoFocus
@@ -310,3 +323,5 @@ class App extends Component {
 }
 
 export default App;
+
+// TODO couple color : rgba(35,167,199,1) || #dc1fbd

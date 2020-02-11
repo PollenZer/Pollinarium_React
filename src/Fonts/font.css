@@ -12,3 +12,8 @@
   font-family:'RobotoB';
   src: url("./Roboto-Black.ttf");
 }
+
+@font-face{
+  font-family:'Cookie';
+  src: url("./Cookie-Regular.ttf");
+}
