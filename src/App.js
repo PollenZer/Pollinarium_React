@@ -5,28 +5,30 @@ import Datas from './Navigation/Datas/Page.js'
 import Home from './Navigation/Home/Page.js'
 import Users from './Navigation/Users/Page.js'
 import FourOFour from './Navigation/FourOFour/Page.js'
-import Drawer from '@material-ui/core/Drawer'; //https://material-ui.com/components/drawers/
-import List from '@material-ui/core/List';
-import Dialog from '@material-ui/core/Dialog';
-import Button from '@material-ui/core/Button';
-import DialogActions from '@material-ui/core/DialogActions';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import Snackbar from '@material-ui/core/Snackbar';
-import AppBar from '@material-ui/core/AppBar';
+import {
+  Drawer,
+  List,
+  Dialog,
+  Button,
+  DialogActions,
+  Divider,
+  ListItem,
+  Snackbar,
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+} from '@material-ui/core'; 
 import Switcher from '@material-ui/core/Switch';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { ChromePicker } from 'react-color';
-import IconButton from '@material-ui/core/IconButton';
+import materialPColor from '@material-ui/core/colors/purple';
 import CloseIcon from '@material-ui/icons/Close';
 import ArrowBack from '@material-ui/icons/ArrowBackIos';
 import MenuIcon from '@material-ui/icons/Menu';
 import MuiAlert from '@material-ui/lab/Alert';
 import SettingsIcon from '@material-ui/icons/ColorLens';
-import materialPColor from '@material-ui/core/colors/purple';
 import materialSColor from '@material-ui/core/colors/yellow';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { ChromePicker } from 'react-color';
 import './Fonts/font.css'
 
 // editer les couleurs par default
@@ -54,15 +56,12 @@ const style={
     textAlign:"center",
     fontFamily:"RobotoR",
   },
-  backgroundLinear:{
-    background: "linear-gradient(to left, red, blue)",
-  },
   inline:{
     display:"inline",
     fontFamily:"RobotoR",
   },
   center:{
-    textAlign:"-webkit-center",
+    textAlign:"center",
   },
   closeDrawerButton:{
     margin:'9px',
@@ -170,7 +169,10 @@ class App extends Component {
           onClose={this.toggleDrawer(false)}
           >
             <div
-            style={{width: "35vw"}}
+            // pour les petits ecran ou 35 %de la largeur ferais un 
+            // panneau de navigation trop petit on met une largeur
+            // minimale de 300 pixels
+            style={{width: "35vw",minWidth:"300px"}}
             onClick={this.toggleDrawer(false)}
             onKeyDown={this.toggleDrawer(false)}
             >
