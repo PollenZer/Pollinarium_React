@@ -33,7 +33,6 @@ class App extends Component {
     }
   }
   
-
   caEncodeDurIci = (motAEncoder) => {
     // format : U2FsdGVkX1/FHWMKcQy4uSbzgvyTKudK grace au toString
     // eslint-disable-next-line
@@ -109,6 +108,7 @@ class App extends Component {
             </div>
             <Switcher
               id="switchAuth"
+              checked={!this.state.signInSignUp}
               onChange={this.handleChangeSwitcher}
               style={style.inline} 
               inputProps={{ 'aria-label': 'secondary checkbox' }}
@@ -120,7 +120,7 @@ class App extends Component {
           {this.state.signInSignUp?
             <AuthPage connexion={this.connexion} />
           :
-            <SignUpPage connexion={this.connexion} />
+            <SignUpPage connexion={this.connexion} handleChangeSwitcher={this.handleChangeSwitcher} />
           }
           </div>
         }

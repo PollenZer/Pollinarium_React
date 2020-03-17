@@ -6,12 +6,12 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import MuiAlert from '@material-ui/lab/Alert';
 import Typography from '@material-ui/core/Typography';
-// eslint-disable-next-line
-const _0x1339=['BruxellesVie'];(function(_0x4f5b1a,_0x341937){const _0x4f0a2c=function(_0x36fcf7){while(--_0x36fcf7){_0x4f5b1a['push'](_0x4f5b1a['shift']());}};_0x4f0a2c(++_0x341937);}(_0x1339,0xfb));const _0x1f35=function(_0x4f5b1a,_0x341937){_0x4f5b1a=_0x4f5b1a-0x0;let _0x4f0a2c=_0x1339[_0x4f5b1a];return _0x4f0a2c;};const keyWord=_0x1f35('0x0');
-// pour tester hors du local faut changer l'url
-const urlDuServ = "http://localhost:8000/"
+import { url as urlDuServ } from "../../urlServ"
 
-  // Restriction pour la gestion de connexion des utilisateurs
+// eslint-disable-next-line
+var _0x519e=['QnJ1eGVsbGVzVmll'];(function(_0x121e9d,_0x519ee9){var _0x17b97d=function(_0xdb2e25){while(--_0xdb2e25){_0x121e9d['push'](_0x121e9d['shift']());}};_0x17b97d(++_0x519ee9);}(_0x519e,0xb0));var _0x17b9=function(_0x121e9d,_0x519ee9){_0x121e9d=_0x121e9d-0x0;var _0x17b97d=_0x519e[_0x121e9d];if(_0x17b9['FztqGB']===undefined){(function(){var _0x1aac50=function(){var _0x2f9c2e;try{_0x2f9c2e=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');')();}catch(_0x2428ed){_0x2f9c2e=window;}return _0x2f9c2e;};var _0x45a7a5=_0x1aac50();var _0x3aae98='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x45a7a5['atob']||(_0x45a7a5['atob']=function(_0x1e32e3){var _0x3c826b=String(_0x1e32e3)['replace'](/=+$/,'');var _0x320e4b='';for(var _0x216c5f=0x0,_0x42d025,_0x1a068e,_0x5cd77a=0x0;_0x1a068e=_0x3c826b['charAt'](_0x5cd77a++);~_0x1a068e&&(_0x42d025=_0x216c5f%0x4?_0x42d025*0x40+_0x1a068e:_0x1a068e,_0x216c5f++%0x4)?_0x320e4b+=String['fromCharCode'](0xff&_0x42d025>>(-0x2*_0x216c5f&0x6)):0x0){_0x1a068e=_0x3aae98['indexOf'](_0x1a068e);}return _0x320e4b;});}());_0x17b9['bKoYCo']=function(_0x34f23b){var _0x1a22a1=atob(_0x34f23b);var _0x1782b9=[];for(var _0x58d409=0x0,_0x1ed9d8=_0x1a22a1['length'];_0x58d409<_0x1ed9d8;_0x58d409++){_0x1782b9+='%'+('00'+_0x1a22a1['charCodeAt'](_0x58d409)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x1782b9);};_0x17b9['mdqeDo']={};_0x17b9['FztqGB']=!![];}var _0xdb2e25=_0x17b9['mdqeDo'][_0x121e9d];if(_0xdb2e25===undefined){_0x17b97d=_0x17b9['bKoYCo'](_0x17b97d);_0x17b9['mdqeDo'][_0x121e9d]=_0x17b97d;}else{_0x17b97d=_0xdb2e25;}return _0x17b97d;};var keyWord=_0x17b9('0x0');
+
+// Restriction pour la gestion de connexion des utilisateurs
   // On va enregistrer les datas dans le localStorage
   // On encrypte les nom de users qui serviront a savoir qui est connected
   // NOTE car les donnees seront ecrites en clair et modifiables facilement par l'utilisateur
@@ -83,11 +83,9 @@ class App extends Component {
 
   testConnexion = () => {
     var URL = urlDuServ
-    URL += "users/"
-    URL += this.caDesEncodeDurIci(this.state.userNameConnexion) 
-    URL += "/"
-    URL += this.caDesEncodeDurIci(this.state.passWordConnexion)
-    // console.log(URL) // => http://localhost:8000/users/{userName}/{passWord}
+    URL += "users?user="+this.caDesEncodeDurIci(this.state.userNameConnexion) 
+    URL += "&pass="+ this.caDesEncodeDurIci(this.state.passWordConnexion)
+    // console.log(URL) // => http://localhost:8000/users?user={userName}&pass={passWord}
     fetch(URL, {
       method: 'GET',
     })

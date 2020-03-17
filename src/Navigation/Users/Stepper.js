@@ -7,7 +7,7 @@ class App extends Component {
         <div>
             <Stepper 
                 alternativeLabel 
-                activeStep={1} 
+                activeStep={this.props.pageNumber} 
                 >
                 <Step>
                     <StepLabel 
