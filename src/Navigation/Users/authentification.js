@@ -4,8 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-import MuiAlert from '@material-ui/lab/Alert';
 import Typography from '@material-ui/core/Typography';
+import MuiAlert from '@material-ui/lab/Alert';
 import { url as urlDuServ } from "../../urlServ"
 
 // eslint-disable-next-line
@@ -75,10 +75,10 @@ class App extends Component {
     // on linsere dans la memoire du navigateur
     localStorage.setItem("logged",userCrypted)
     // on la met dans notre state pour que la page reagisse en fonction
-    this.setState({userNameConnexion:userCrypted},() => {
+    this.setState({userNameConnexion:userCrypted}/*,() => {
       // on print pour etre sur davoir un mot bien encoded
       console.log(this.state.userNameConnexion)
-    })
+    }*/)
   }
 
   testConnexion = () => {

@@ -67,7 +67,7 @@ const style={
     margin:'9px',
   },
   titreDeLaPage:{
-    margin:'auto auto',
+    margin:'auto',
   },
   whichColor:{
     margin:'0 auto',
